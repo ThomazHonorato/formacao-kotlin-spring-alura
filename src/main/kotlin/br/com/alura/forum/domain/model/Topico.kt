@@ -13,8 +13,8 @@ data class Topico (
     @GeneratedValue
     val id: UUID? = null,
 
-    val titulo: String,
-    val mensagem: String,
+    val titulo: String = "",
+    val mensagem: String = "",
     val dataCriacao: LocalDateTime = LocalDateTime.now(),
 
     @ManyToOne(cascade = [CascadeType.ALL])

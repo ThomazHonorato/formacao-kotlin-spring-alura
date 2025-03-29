@@ -9,6 +9,6 @@ data class Curso (
     @GeneratedValue
     val id: UUID? = null,
 
-    val nome: String,
-    val categoria: String,
+    val nome: String ="",
+    val categoria: String ="",
 )

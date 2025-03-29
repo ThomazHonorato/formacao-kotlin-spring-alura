@@ -11,7 +11,7 @@ data class Respostas(
     @GeneratedValue
     val id: UUID? = null,
 
-    val mensagem: String,
+    val mensagem: String = "",
     val dataCriacao: LocalDateTime = LocalDateTime.now(),
 
     @ManyToOne(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
