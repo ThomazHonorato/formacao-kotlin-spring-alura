@@ -23,6 +23,11 @@ class UsuarioService(var usuarios: List<Usuario>) {
             nome = "Laura",
             email = "Laura@gmail.com",
         );
+        val usuario4 = Usuario(
+            id = 4,
+            nome = "Gustavo",
+            email = "Gustavo@gmail.com",
+        );
 
         usuarios = Arrays.asList(usuario, usuario2, usuario3)
     }
