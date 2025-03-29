@@ -14,7 +14,7 @@ class TopicoController(private val topicoService: TopicoService) {
         return topicoService.listarTopicos();
     }
 
-    @GetMapping("/listar/{id}")
+    /*@GetMapping("/listar/{id}")
     fun listarTopicoById(@PathVariable id: Long): Topico {
         return topicoService.listarTopicoById(id)
     }
@@ -22,5 +22,5 @@ class TopicoController(private val topicoService: TopicoService) {
     @PostMapping
     fun criarTopico(@RequestBody topico: TopicoDto) {
         topicoService.criarTopico(topico)
-    }
+    }*/
 }

@@ -1,4 +1,6 @@
 package br.com.alura.forum.domain.request
 
-class UsuarioRequest {
-}
+data class UsuarioRequest(
+    val nome: String,
+    val email: String
+)

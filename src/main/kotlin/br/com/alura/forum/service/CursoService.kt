@@ -7,7 +7,7 @@ import java.util.*
 @Service
 class CursoService (var cursos: List<Curso>) {
 
-    init{
+    /*init{
         val curso = Curso(
             id = 1,
             nome = "Kotlin",
@@ -30,6 +30,6 @@ class CursoService (var cursos: List<Curso>) {
         return cursos.stream().filter({
             c -> c.id == id
         }).findFirst().get()
-    }
+    }*/
 
 }

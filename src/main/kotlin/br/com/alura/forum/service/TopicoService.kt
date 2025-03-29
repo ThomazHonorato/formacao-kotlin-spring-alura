@@ -13,7 +13,7 @@ class TopicoService(
     private val cursoService: CursoService,
     private val usuarioService: UsuarioService,) {
 
-    init {
+    /*init {
         val topico = Topico(
             id = 1,
             titulo = "Duvidas Kotlin 1",
@@ -60,19 +60,19 @@ class TopicoService(
             ),
         )
         topicos = listOf(topico, topico2, topico3)
-    }
+    }*/
 
     fun listarTopicos(): List<Topico> {
         return topicos
     }
 
-    fun listarTopicoById(id: Long): Topico {
+    /*fun listarTopicoById(id: Long): Topico {
         return topicos.stream().filter({ t ->
             t.id == id
         }).findFirst().get()
-    }
+    }*/
 
-    fun criarTopico(topico: TopicoDto) {
+    /*fun criarTopico(topico: TopicoDto) {
         topicos = topicos.plus(Topico(
             id = topicos.size.toLong()+1,
             titulo = topico.titulo,
@@ -80,6 +80,6 @@ class TopicoService(
             curso = cursoService.buscarCurosoPorId(topico.idCurso),
             autor = usuarioService.buscarUsuarioPorId(topico.idAutor),
         ))
-    }
+    }*/
 
 }

@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: bitnami/postgresql:latest
+    container_name: postgres-estudos-kotlin
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRESQL_DATABASE=estudosKotlin
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=123456
+    volumes:
+      - postgres_data:/bitnami/postgresql
+
+volumes:
+  postgres_data:

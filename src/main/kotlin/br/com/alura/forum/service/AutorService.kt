@@ -1,40 +1,36 @@
 package br.com.alura.forum.service
 
 import br.com.alura.forum.domain.model.Usuario
+import br.com.alura.forum.domain.response.UsuarioResponse
+import br.com.alura.forum.repository.UsuarioRepository
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class UsuarioService(var usuarios: List<Usuario>) {
+class UsuarioService(
+    var usuarios: List<Usuario>,
+    private val usuarioRepository: UsuarioRepository
+) {
 
-    init {
-        val usuario = Usuario(
-            id = 1,
-            nome = "Thomaz",
-            email = "thomaz@gmail.com",
-        );
-        val usuario2 = Usuario(
-            id = 2,
-            nome = "Jefferson",
-            email = "Jefferson@gmail.com",
-        );
-        val usuario3 = Usuario(
-            id = 3,
-            nome = "Laura",
-            email = "Laura@gmail.com",
-        );
-        val usuario4 = Usuario(
-            id = 4,
-            nome = "Gustavo",
-            email = "Gustavo@gmail.com",
-        );
-
-        usuarios = Arrays.asList(usuario, usuario2, usuario3)
+    fun cadastrarAutor(nome: String, email: String): UsuarioResponse {
+        return with(usuarioRepository.save(Usuario(nome = nome, email = email))) {
+            UsuarioResponse(id = id!!, nome = nome, email = email)
+        }
     }
 
-    fun buscarUsuarioPorId(id: Long): Usuario {
+    fun buscarUsuarios(): List<UsuarioResponse> {
+        return usuarioRepository.findAll().map {
+            UsuarioResponse(
+                id = it.id!!,
+                nome = it.nome,
+                email = it.email
+            )
+        }
+    }
+
+    /*fun buscarUsuarioPorId(id: Long): Usuario {
         return usuarios.stream().filter({
             u -> u.id == id
         }).findFirst().get()
-    }
+    }*/
 }
