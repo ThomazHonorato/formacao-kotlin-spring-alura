@@ -1,6 +1,7 @@
 package br.com.alura.forum.service
 
 import br.com.alura.forum.domain.mapper.CursoMapper
+import br.com.alura.forum.domain.model.Curso
 import br.com.alura.forum.domain.request.CursoRequest
 import br.com.alura.forum.domain.response.CursoResponse
 import br.com.alura.forum.domain.response.UsuarioResponse
@@ -29,6 +30,10 @@ class CursoService(
             .orElseThrow { NoSuchElementException("Curso com id $id não encontrado") }
 
         return cursoMapper.toCursoResponse(curso);
+    }
+
+    fun buscarCursoEntityPorId(id: UUID): Curso? {
+        return cursoRepository.findById(id).orElse(null)
     }
 
 }

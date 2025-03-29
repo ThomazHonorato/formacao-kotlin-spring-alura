@@ -18,14 +18,14 @@ data class Topico (
     val dataCriacao: LocalDateTime = LocalDateTime.now(),
 
     @ManyToOne(cascade = [CascadeType.ALL])
-    val curso: Curso,
+    val curso: Curso = Curso(),
 
     @ManyToOne(cascade = [CascadeType.ALL])
-    val autor: Usuario,
+    val autor: Usuario = Usuario(),
 
     @Enumerated(EnumType.STRING)
     val status: StatusTopico = StatusTopico.NAO_RESPONDIDO,
 
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-    val respostas: List<Respostas> = ArrayList()
+    val respostas: List<Respostas> = emptyList()
     )

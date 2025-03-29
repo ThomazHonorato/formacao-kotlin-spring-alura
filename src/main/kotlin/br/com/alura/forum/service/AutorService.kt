@@ -1,6 +1,7 @@
 package br.com.alura.forum.service
 
 import br.com.alura.forum.domain.mapper.UsuarioMapper
+import br.com.alura.forum.domain.model.Usuario
 import br.com.alura.forum.domain.request.UsuarioRequest
 import br.com.alura.forum.domain.response.UsuarioResponse
 import br.com.alura.forum.repository.UsuarioRepository
@@ -30,5 +31,9 @@ class UsuarioService(
             .orElseThrow { NoSuchElementException("Usuário com id $id não encontrado") }
 
         return usuarioMapper.toUsuarioResponse(usuario)
+    }
+
+    fun buscarUsuarioEntityPorId(id: UUID): Usuario? {
+        return usuarioRepository.findById(id).orElse(null)
     }
 }

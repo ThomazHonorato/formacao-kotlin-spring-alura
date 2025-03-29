@@ -1,85 +1,39 @@
 package br.com.alura.forum.service
 
-import br.com.alura.forum.domain.dto.TopicoDto
-import br.com.alura.forum.domain.model.Curso
+import br.com.alura.forum.domain.mapper.TopicoMapper
 import br.com.alura.forum.domain.model.Topico
-import br.com.alura.forum.domain.model.Usuario
+import br.com.alura.forum.domain.request.TopicoRequest
+import br.com.alura.forum.domain.response.TopicoResponse
+import br.com.alura.forum.repository.TopicoRepository
 import org.springframework.stereotype.Service
 import java.util.*
+import kotlin.NoSuchElementException
 
 @Service
 class TopicoService(
-    private var topicos: List<Topico>,
+    private var topicos: MutableList<Topico>,
     private val cursoService: CursoService,
-    private val usuarioService: UsuarioService,) {
+    private val usuarioService: UsuarioService,
+    private val topicoMapper: TopicoMapper,
+    private val topicoRepository: TopicoRepository,) {
 
-    /*init {
-        val topico = Topico(
-            id = 1,
-            titulo = "Duvidas Kotlin 1",
-            mensagem = "Variaveis no Kotlin",
-            curso = Curso(
-                id = 1,
-                nome = "Kotlin",
-                categoria = "Backend",
-            ),
-            autor = Usuario(
-                id = 1,
-                nome = "Thomaz",
-                email = "thomaz@gmail.com",
-            ),
-        );
-        val topico2 = Topico(
-            id = 2,
-            titulo = "Duvidas Kotlin 2",
-            mensagem = "Variaveis no Kotlin",
-            curso = Curso(
-                id = 1,
-                nome = "Kotlin",
-                categoria = "Backend",
-            ),
-            autor = Usuario(
-                id = 1,
-                nome = "Thomaz",
-                email = "thomaz@gmail.com",
-            ),
-        );
-        val topico3 = Topico(
-            id = 3,
-            titulo = "Duvidas Kotlin 3",
-            mensagem = "Variaveis no Kotlin",
-            curso = Curso(
-                id = 1,
-                nome = "Kotlin",
-                categoria = "Backend",
-            ),
-            autor = Usuario(
-                id = 1,
-                nome = "Thomaz",
-                email = "thomaz@gmail.com",
-            ),
-        )
-        topicos = listOf(topico, topico2, topico3)
-    }*/
+    fun cadastrarTopico(topicoRequest: TopicoRequest): TopicoResponse {
+        val usuario = usuarioService.buscarUsuarioEntityPorId(topicoRequest.autorId)
+            ?: throw NoSuchElementException("Usuario ${topicoRequest.autorId} não encontrado")
 
-    fun listarTopicos(): List<Topico> {
-        return topicos
+        val curso = cursoService.buscarCursoEntityPorId(topicoRequest.cursoId)
+            ?: throw NoSuchElementException("Curso ${topicoRequest.cursoId} nãoo encontrado")
+
+        val topico = topicoMapper.toTopicoEntity(topicoRequest, curso, usuario)
+
+        val topicoSalvo = topicoRepository.save(topico)
+
+        return topicoMapper.toTopicoResponse(topicoSalvo)
     }
 
-    /*fun listarTopicoById(id: Long): Topico {
-        return topicos.stream().filter({ t ->
-            t.id == id
-        }).findFirst().get()
-    }*/
-
-    /*fun criarTopico(topico: TopicoDto) {
-        topicos = topicos.plus(Topico(
-            id = topicos.size.toLong()+1,
-            titulo = topico.titulo,
-            mensagem = topico.mensagem,
-            curso = cursoService.buscarCurosoPorId(topico.idCurso),
-            autor = usuarioService.buscarUsuarioPorId(topico.idAutor),
-        ))
-    }*/
-
+    fun listarTopicos(): List<TopicoResponse> {
+        return topicoRepository.findAll().map(
+            topicoMapper::toTopicoResponse
+        )
+    }
 }
